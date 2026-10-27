@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # Reference to your existing Overleaf service
+  overleaf:
+    image: sharelatex/sharelatex:6.3.0-texlive-full
+    container_name: overleaf
+    volumes:
+      - ./nginx-mcp-bridge.conf:/etc/nginx/vhost-extras/overleaf/mcp-bridge.conf:ro
+
+  # Overleaf Community Edition MCP Server Bridge
+  overleaf-mcp:
+    build:
+      context: .
+    image: ghcr.io/alanmagno1/overleaf-ce-mcp:latest
+    container_name: overleaf-mcp
+    restart: unless-stopped
+    mem_limit: 256m
+    ports:
+      - "8099:8000"
+    environment:
+      OVERLEAF_MCP_API_KEY: "your-secret-api-key-here"
+      OVERLEAF_WEB_URL: "http://overleaf:80"
+      OVERLEAF_API_URL: "http://overleaf:3000"
+      OVERLEAF_MONGO_URL: "mongodb://overleaf-mongo:27017/sharelatex?replicaSet=overleaf"
+      OVERLEAF_REDIS_URL: "redis://overleaf-redis:6379/0"
+      OVERLEAF_PUBLIC_BASE_URL: "https://overleaf.example.com/mcp-bridge"
+    networks:
+      - default
+      - overleaf-net
+
+networks:
+  overleaf-net:
+    external: true

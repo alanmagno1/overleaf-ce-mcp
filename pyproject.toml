@@ -1,0 +1,44 @@
+[project]
+name = "overleaf-ce-mcp"
+version = "1.0.0"
+description = "MCP Server and REST API Bridge for self-hosted Overleaf Community Edition (ShareLaTeX)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Alan Magno", email = "alanmagno1@hotmail.com" }
+]
+keywords = ["mcp", "overleaf", "latex", "sharelatex", "ai", "llm", "claude", "cursor", "antigravity"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+]
+dependencies = [
+    "mcp[cli]>=1.9.0,<2.0.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "httpx>=0.27.0",
+    "pymongo>=4.9.0",
+    "redis>=5.2.0",
+    "python-multipart>=0.0.12",
+    "pydantic>=2.9.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/alanmagno1/overleaf-ce-mcp"
+Repository = "https://github.com/alanmagno1/overleaf-ce-mcp"
+Issues = "https://github.com/alanmagno1/overleaf-ce-mcp/issues"
+
+[project.scripts]
+overleaf-ce-mcp = "src.server:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
